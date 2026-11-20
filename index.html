@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SewaCamp Malang - Rental Alat Camping & Outdoor Terlengkap</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast-notification" class="toast-notification">
+        <div class="toast-icon">
+            <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+        <p id="toast-message" class="toast-msg"></p>
+    </div>
+
+    <!-- MODAL UCAPAN TERIMA KASIH SETELAH CHECKOUT WHATSAPP -->
+    <div id="thankyou-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <button onclick="closeThankYouModal()" aria-label="Tutup modal ucapan terima kasih" class="modal-close-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="modal-check-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <span class="modal-badge">Pesanan Diteruskan ke WhatsApp</span>
+                <h3 class="modal-title">Terima Kasih, <span id="ty-customer-name">Pelanggan</span>!</h3>
+            </div>
+
+            <div class="modal-body">
+                <p class="modal-desc">
+                    Terima kasih telah mempercayakan kebutuhan camping & pendakian Anda kepada <strong>SewaCamp Malang</strong>. Admin kami akan segera membalas pesan WhatsApp Anda untuk konfirmasi ketersediaan alat.
+                </p>
+
+                <div class="modal-summary-box">
+                    <div class="summary-row">
+                        <span class="label">Tanggal Ambil:</span>
+                        <span id="ty-start-date" class="val">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="label">Durasi Sewa:</span>
+                        <span id="ty-days" class="val">-</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="label">Jumlah Item:</span>
+                        <span id="ty-item-summary" class="val right-wrap">-</span>
+                    </div>
+                    <div class="summary-total-row">
+                        <span class="label">Estimasi Total:</span>
+                        <span id="ty-grand-total" class="val">Rp 0</span>
+                    </div>
+                </div>
+
+                <div class="modal-warning-box">
+                    <i class="fa-solid fa-id-card"></i>
+                    <p>Jangan lupa membawa <strong>2 kartu identitas asli</strong> (KTP/SIM/KTM/Kartu Pelajar) saat pengambilan alat di Basecamp JL Tel Aviv Sumberpucung, Malang.</p>
+                </div>
+
+                <div class="modal-actions">
+                    <a id="ty-reopen-wa" href="#" target="_blank" class="btn-wa-reopen">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>Buka WhatsApp Lagi</span>
+                    </a>
+                    <button onclick="closeThankYouModal()" class="btn-modal-done">
+                        Selesai & Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-inner">
+                <div class="brand-logo">
+                    <div class="brand-icon">
+                        <i class="fa-solid fa-mountain-sun"></i>
+                    </div>
+                    <div>
+                        <span class="brand-title">SewaCamp<span>.Malang</span></span>
+                        <p class="brand-subtitle">Rental Alat Outdoor & Camping</p>
+                    </div>
+                </div>
+
+                <div class="nav-links">
+                    <a href="#beranda">Beranda</a>
+                    <a href="#katalog">Katalog Alat</a>
+                    <a href="#kalkulator">Kalkulator Sewa</a>
+                    <a href="#syarat">Syarat & Ketentuan</a>
+                    <a href="#kontak">Kontak</a>
+                </div>
+
+                <div class="nav-cta">
+                    <a href="https://wa.me/6281390714457?text=Halo%20SewaCamp%20Malang,%20saya%20ingin%20bertanya%20tentang%20penyewaan%20alat%20camping." target="_blank" class="btn-nav-wa">
+                        <i class="fa-brands fa-whatsapp"></i>
+                        <span>Chat Admin</span>
+                    </a>
+                </div>
+
+                <div class="mobile-menu-toggle">
+                    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Buka Menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="#beranda">Beranda</a>
+            <a href="#katalog">Katalog Alat</a>
+            <a href="#kalkulator">Kalkulator Sewa</a>
+            <a href="#syarat">Syarat & Ketentuan</a>
+            <a href="#kontak">Kontak</a>
+            <a href="https://wa.me/6281390714457" target="_blank" class="mobile-wa-btn">
+                <i class="fa-brands fa-whatsapp"></i> Chat WhatsApp
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="beranda" class="hero">
+        <div class="hero-pattern"></div>
+        <div class="container hero-content">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <span class="hero-badge">Rental Alat Camping Terbaik di Malang</span>
+                    <h1 class="hero-title">Siap Menjelajah Alam Tanpa Ribet Beli Alat?</h1>
+                    <p class="hero-desc">
+                        Sediakan perlengkapan camping berkualitas tinggi untuk pendakian, liburan alam, atau camping ceria Anda di Malang dan sekitarnya. Harga bersahabat, alat bersih & siap pakai!
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#katalog" class="btn-hero-primary">Lihat Katalog Alat</a>
+                        <a href="#kalkulator" class="btn-hero-secondary">Hitung Estimasi Sewa</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div>
+                            <p class="stat-num">500+</p>
+                            <p class="stat-label">Pendaki Puas</p>
+                        </div>
+                        <div>
+                            <p class="stat-num">100%</p>
+                            <p class="stat-label">Alat Berkualitas</p>
+                        </div>
+                        <div>
+                            <p class="stat-num">24/7</p>
+                            <p class="stat-label">Konsultasi Trip</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="hero-card-wrapper">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVWfQ98JJBSUXZG4V_kbhfhEwi_3CagUzR9anFOF67NLqCdlN2d15kS3g&s=10" onerror="this.src='https://placehold.co/600x400/1b4332/d4a373?text=Tenda+Dome+SewaCamp'" alt="Camping Tent" class="hero-card-img">
+                        <div class="hero-card-overlay">
+                            <span class="badge-stock">Ready Stock</span>
+                            <h3 class="hero-card-title">Paket Tenda Dome Kapasitas 4-5 Orang</h3>
+                            <p class="hero-card-price">Mulai dari Rp 55.000 / hari</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KATALOG PRODUK -->
+    <section id="katalog" class="catalog-section container">
+        <div class="section-header">
+            <h2 class="section-title">Katalog & Daftar Harga Sewa</h2>
+            <p class="section-subtitle">Pilih alat camping yang Anda butuhkan. Tambahkan ke kalkulator sewa untuk menghitung total biaya otomatis.</p>
+            
+            <div class="filter-buttons">
+                <button onclick="filterCategory('all', this)" class="cat-btn active" data-category="all">Semua Alat</button>
+                <button onclick="filterCategory('tenda', this)" class="cat-btn" data-category="tenda">Tenda & Matras</button>
+                <button onclick="filterCategory('tidur', this)" class="cat-btn" data-category="tidur">Perlengkapan Tidur</button>
+                <button onclick="filterCategory('masak', this)" class="cat-btn" data-category="masak">Alat Masak</button>
+                <button onclick="filterCategory('penerangan', this)" class="cat-btn" data-category="penerangan">Penerangan</button>
+                <button onclick="filterCategory('lainnya', this)" class="cat-btn" data-category="lainnya">Lainnya / Aksesoris</button>
+            </div>
+        </div>
+
+        <div id="product-grid" class="product-grid">
+            <!-- Produk dirender via JavaScript -->
+        </div>
+    </section>
+
+    <!-- KALKULATOR & KERANJANG SEWA -->
+    <section id="kalkulator" class="calculator-section">
+        <div class="container">
+            <div class="calc-header">
+                <span class="calc-badge">Kalkulator Otomatis</span>
+                <h2 class="calc-title">Rincian & Hitung Durasi Sewa</h2>
+                <p class="section-subtitle">Atur jumlah hari sewa, periksa alat yang dipilih, dan kirim pesanan langsung via WhatsApp.</p>
+            </div>
+
+            <div class="calc-grid">
+                <div class="calc-card duration-card">
+                    <h3 class="card-heading">
+                        <i class="fa-solid fa-calendar-days"></i> Durasi Penyewaan
+                    </h3>
+                    
+                    <div>
+                        <label class="input-label" for="rental-days">Jumlah Hari Sewa:</label>
+                        <div class="days-input-group">
+                            <button onclick="adjustDays(-1)" class="btn-day-adjust">-</button>
+                            <input type="number" id="rental-days" value="1" min="1" max="30" onchange="updateCalculator()" class="input-days">
+                            <button onclick="adjustDays(1)" class="btn-day-adjust">+</button>
+                        </div>
+                        <p class="helper-note">*Perhitungan dihitung per 24 jam / hari sewa.</p>
+                    </div>
+
+                    <div class="info-alert-box">
+                        <i class="fa-solid fa-circle-info"></i> Pengambilan dan pengembalian alat dilakukan di basecamp kami di Malang.
+                    </div>
+                </div>
+
+                <div class="calc-card cart-card">
+                    <div>
+                        <h3 class="card-heading">
+                            <i class="fa-solid fa-cart-shopping"></i> Alat yang Dipilih
+                        </h3>
+                        <div id="selected-items-container" class="selected-items-list">
+                            <p class="empty-cart-msg" id="empty-cart-text">Belum ada alat yang dipilih. Silakan tambah dari katalog di atas.</p>
+                        </div>
+                    </div>
+
+                    <div class="cart-footer">
+                        <div class="grand-total-row">
+                            <span class="grand-total-label">Total Biaya Sewa:</span>
+                            <span id="grand-total" class="grand-total-amount">Rp 0</span>
+                        </div>
+
+                        <div class="customer-form-grid">
+                            <div>
+                                <label class="form-label-sm" for="customer-name">Nama Lengkap:</label>
+                                <input type="text" id="customer-name" placeholder="cth. Budi Santoso" class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label-sm" for="start-date">Tanggal Mulai Ambil:</label>
+                                <input type="date" id="start-date" class="form-input">
+                            </div>
+                        </div>
+
+                        <button onclick="checkoutWhatsApp()" class="btn-checkout-wa">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <span>Pesan Sekarang via WhatsApp</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SYARAT & KETENTUAN -->
+    <section id="syarat" class="terms-section container">
+        <div class="terms-header">
+            <h2 class="section-title">Syarat & Ketentuan Sewa</h2>
+            <p class="section-subtitle">Mudah dan aman, pastikan melengkapi ketentuan berikut sebelum penyewaan.</p>
+        </div>
+
+        <div class="terms-grid">
+            <div class="term-card">
+                <div class="term-icon">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+                <h3 class="term-title">1. Jaminan Identitas</h3>
+                <p class="term-desc">
+                    Menyerahkan 2 kartu identitas asli yang masih berlaku (KTP / SIM / Kartu Pelajar / KTM) atas nama penyewa yang akan ditinggal selama masa sewa.
+                </p>
+            </div>
+
+            <div class="term-card">
+                <div class="term-icon">
+                    <i class="fa-solid fa-clock"></i>
+                </div>
+                <h3 class="term-title">2. Waktu & Durasi</h3>
+                <p class="term-desc">
+                    Perhitungan sewa dihitung per 24 jam. Keterlambatan pengembalian tanpa konfirmasi akan dikenakan denda sesuai tarif harian alat.
+                </p>
+            </div>
+
+            <div class="term-card">
+                <div class="term-icon">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+                <h3 class="term-title">3. Kondisi Alat</h3>
+                <p class="term-desc">
+                    Alat dicek bersama saat pengambilan dan pengembalian. Penyewa wajib mengembalikan alat dalam keadaan bersih dan kering. Kerusakan / kehilangan ditanggung penyewa.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- KONTAK & LOKASI -->
+    <section id="kontak" class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info-col">
+                    <span class="contact-badge">Hubungi Kami</span>
+                    <h2 class="contact-title">Basecamp SewaCamp Malang</h2>
+                    <p class="contact-desc">
+                        Siap melayani kebutuhan pendakian dan liburan outdoor Anda di Malang Raya. Silakan kunjungi basecamp atau hubungi kontak di bawah.
+                    </p>
+                    <div class="contact-items">
+                        <div class="contact-item">
+                            <div class="contact-item-icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <h4>Alamat Basecamp</h4>
+                                <p>JL Tel Aviv Sumberpucung, Kabupaten Malang, Jawa Timur</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <h4>WhatsApp / Telepon</h4>
+                                <p>+62 813 9071 4457</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-item-icon"><i class="fa-solid fa-clock"></i></div>
+                            <div>
+                                <h4>Jam Operasional</h4>
+                                <p>Setiap Hari: 08.00 - 20.00 WIB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-cta-box">
+                    <h3>Punya Pertanyaan Khusus?</h3>
+                    <p>Tanyakan ketersediaan alat dalam jumlah banyak atau konsultasi paket pendakian gunung di Malang (Semeru, Arjuno, Bromo, Panderman).</p>
+                    <a href="https://wa.me/6281390714457?text=Halo%20SewaCamp%20Malang,%20saya%20mau%20konsultasi%20alat%20camping." target="_blank" class="btn-contact-wa">
+                        <i class="fa-brands fa-whatsapp"></i> Chat Langsung via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 SewaCamp Malang. All rights reserved. Solusi Rental Alat Camping & Outdoor Terpercaya.</p>
+        </div>
+    </footer>
+
+    <!-- FLOATING AI CHATBOT WIDGET -->
+    <div id="chatbot-wrapper" class="chatbot-wrapper">
+        <div id="chat-window" class="chat-window">
+            <div class="chat-header">
+                <div class="chat-agent-info">
+                    <div class="chat-avatar-wrap">
+                        <div class="chat-avatar">
+                            <i class="fa-solid fa-campground"></i>
+                        </div>
+                        <span class="online-dot"></span>
+                    </div>
+                    <div>
+                        <h4 class="chat-agent-name">Asisten SewaCamp</h4>
+                        <p class="chat-agent-status">AI Customer Service &bull; Online</p>
+                    </div>
+                </div>
+                <div class="chat-header-actions">
+                    <button onclick="resetChat()" title="Reset Percakapan" class="chat-icon-btn">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                    <button onclick="toggleChat()" title="Tutup Chat" class="chat-icon-btn">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="chat-messages" class="chat-messages">
+                <div class="msg-row-bot">
+                    <div class="bot-mini-avatar">
+                        <i class="fa-solid fa-mountain-sun"></i>
+                    </div>
+                    <div class="bubble-bot">
+                        Halo Kak! 窓 Selamat datang di <strong>SewaCamp Malang</strong>. Saya asisten virtual yang siap membantu menjawab pertanyaan seputar daftar harga sewa alat camping, syarat sewa, jam buka, hingga lokasi basecamp kami. Ada yang bisa dibantu?
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-questions-bar">
+                <p class="quick-questions-label">Pertanyaan Populer:</p>
+                <div class="quick-chips">
+                    <button onclick="askQuickQuestion('Berapa harga sewa tenda?')" class="chip-btn">笵ｺ Harga Tenda</button>
+                    <button onclick="askQuickQuestion('Apa saja syarat & ketentuan sewanya?')" class="chip-btn">ｪｪ Syarat Sewa</button>
+                    <button onclick="askQuickQuestion('Dimana alamat basecamp dan jam bukanya?')" class="chip-btn">桃 Lokasi & Jam Buka</button>
+                    <button onclick="askQuickQuestion('Alat masak dan tidur apa saja yang disewakan?')" class="chip-btn">叉 Alat Masak & Tidur</button>
+                </div>
+            </div>
+
+            <form id="chat-form" onsubmit="handleChatSubmit(event)" class="chat-form">
+                <input type="text" id="chat-input" placeholder="Tanya harga alat, syarat, lokasi..." autocomplete="off" class="chat-input">
+                <button type="submit" id="chat-send-btn" class="chat-send-btn" aria-label="Kirim Pesan">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+
+        <button id="chat-toggle-btn" onclick="toggleChat()" aria-label="Buka Chat Asisten SewaCamp" class="chat-toggle-btn">
+            <div class="chat-toggle-icon-wrap">
+                <i id="chat-toggle-icon" class="fa-solid fa-comments"></i>
+                <span class="ping-dot animate"></span>
+                <span class="ping-dot"></span>
+            </div>
+            <span class="chat-toggle-label">Tanya AI SewaCamp</span>
+        </button>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const todayStr = new Date().toISOString().split('T')[0];
+        const startDateInput = document.getElementById('start-date');
+        startDateInput.min = todayStr;
+        startDateInput.value = todayStr;
+
+        const products = [
+            { id: 1, name: 'Tenda Dome Kapasitas 2-3 Orang', category: 'tenda', price: 35000, image: 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full//108/MTA-56585277/no-brand_tenda-camping-dome-warna-kapasitas-2-3-orang-ultralight-tent-gunung_full01.jpg' },
+            { id: 2, name: 'Tenda Dome Kapasitas 4-5 Orang', category: 'tenda', price: 55000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVWfQ98JJBSUXZG4V_kbhfhEwi_3CagUzR9anFOF67NLqCdlN2d15kS3g&s=10' },
+            { id: 3, name: 'Tenda Dome Kapasitas 6-7 Orang', category: 'tenda', price: 85000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFPtWPdTeHdCm8FjZ1EQu4MQSL7kZBQO4eRiMpedifsA&s=10' },
+            { id: 4, name: 'Sleeping Bag Bulu Angsa / Polar', category: 'tidur', price: 15000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSELbeNxuYoz9tG5ShqEF54PyhAazp_igIxIxSDxK67Ew&s=10' },
+            { id: 5, name: 'Matras Sponge / Matras Gulung', category: 'tenda', price: 5000, image: 'https://down-id.img.susercontent.com/file/id-11134207-7rbkd-m8ixi97563u5c0' },
+            { id: 6, name: 'Kompor Portable Kotak + Gas', category: 'masak', price: 15000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9Y3Uvo7wvk2rEnBEBGZW7CmrVZtA_LYEZkdXNTZ9-ZA&s=10' },
+            { id: 7, name: 'Nesting / Cooking Set (Isi 3-4)', category: 'masak', price: 15000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6WsY1Sg7uUCqaRKWJ8tAxDPEFaK9m-mCsUHaP5fLsig&s=10' },
+            { id: 8, name: 'Headlamp LED / Senter Kepala', category: 'penerangan', price: 10000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWHGvPvEyVnKJc9obrW3C6AvO5RuP7bELmfHVHTsYNHg&s' },
+            { id: 9, name: 'Carrier / Tas Keril 60L - 70L', category: 'lainnya', price: 25000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLIDVG7pynjao8zXUcOM_i2aP-GcWbbO2ov9w5GJ0-Wg&s=10' },
+            { id: 10, name: 'Hammock / Ayunan Gantung', category: 'lainnya', price: 10000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtyRD_F4t6pRN2k-d0msCkoNsOfLS_9vkJDmOum0JJPQ&s=10' },
+            { id: 11, name: 'Meja Camping Lipat Portable', category: 'masak', price: 20000, image: 'https://static.jakmall.id/2023/03/images/products/41c9ad/original/taffsport-meja-lipat-piknik-foldable-portable-aluminium-56x405x40cm-8825.jpg' },
+            { id: 12, name: 'Kursi Lipat Outdoor Portable', category: 'lainnya', price: 15000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQcN7IZrqbFQd5a3Gv0l9fNX4Z9fFwODvLW-WxFvVrcw&s=10' },
+            { id: 13, name: 'Lampu Tenda / Lantern LED Gantung', category: 'penerangan', price: 10000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHDcGEyguVnPfGRiLvwMGhyEra_bNo5vYJ29gx9GvfsQ&s=10' },
+            { id: 14, name: 'Trekking Pole / Tongkat Pendakian', category: 'lainnya', price: 10000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRX1_B0TbDmCqOsGrwSgK5xzeNSX8VHhPJcBDI2-X-6YA&s=10' }
+        ];
+
+        let cart = {};
+        let toastTimeout;
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast-notification');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        });
+
+        function renderProducts(filter = 'all') {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+            filtered.forEach(product => {
+                const isSelected = cart[product.id] && cart[product.id] > 0;
+                const qty = isSelected ? cart[product.id] : 0;
+
+                const card = document.createElement('div');
+                card.className = "product-card";
+                card.innerHTML = `
+                    <div>
+                        <div class="product-img-box">
+                            <img src="${product.image}" onerror="this.src='https://placehold.co/600x400/1b4332/d4a373?text=${encodeURIComponent(product.name)}'" alt="${product.name}" class="product-img">
+                            <span class="product-cat-badge">${product.category}</span>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name">${product.name}</h3>
+                            <p class="product-price">Rp ${product.price.toLocaleString('id-ID')} <span>/ hari</span></p>
+                        </div>
+                    </div>
+                    <div class="product-action">
+                        ${qty === 0 ? `
+                            <button onclick="addToCart(${product.id})" class="btn-add-cart">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Tambah ke Sewa</span>
+                            </button>
+                        ` : `
+                            <div class="qty-control">
+                                <button onclick="changeQty(${product.id}, -1)" class="qty-btn">-</button>
+                                <span class="qty-val">${qty} Unit</span>
+                                <button onclick="changeQty(${product.id}, 1)" class="qty-btn">+</button>
+                            </div>
+                        `}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCategory(category, btnEl) {
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (btnEl) {
+                btnEl.classList.add('active');
+            }
+            renderProducts(category);
+        }
+
+        function getCurrentFilter() {
+            const activeBtn = document.querySelector('.cat-btn.active');
+            if (activeBtn && activeBtn.dataset.category) {
+                return activeBtn.dataset.category;
+            }
+            return 'all';
+        }
+
+        function addToCart(productId) {
+            cart[productId] = 1;
+            renderProducts(getCurrentFilter());
+            updateCalculator();
+        }
+
+        function changeQty(productId, delta) {
+            cart[productId] = (cart[productId] || 0) + delta;
+            if (cart[productId] <= 0) {
+                delete cart[productId];
+            }
+            renderProducts(getCurrentFilter());
+            updateCalculator();
+        }
+
+        function adjustDays(delta) {
+            const input = document.getElementById('rental-days');
+            let val = parseInt(input.value) + delta;
+            if (val < 1) val = 1;
+            input.value = val;
+            updateCalculator();
+        }
+
+        function updateCalculator() {
+            const days = parseInt(document.getElementById('rental-days').value) || 1;
+            const container = document.getElementById('selected-items-container');
+            const grandTotalEl = document.getElementById('grand-total');
+
+            container.innerHTML = '';
+            let grandTotal = 0;
+            let hasItems = false;
+
+            for (const [idStr, qty] of Object.entries(cart)) {
+                if (qty > 0) {
+                    hasItems = true;
+                    const product = products.find(p => p.id == idStr);
+                    const subtotal = product.price * days * qty;
+                    grandTotal += subtotal;
+
+                    const itemRow = document.createElement('div');
+                    itemRow.className = "cart-item-row";
+                    itemRow.innerHTML = `
+                        <div class="cart-item-info">
+                            <h4 class="cart-item-title">${product.name}</h4>
+                            <p class="cart-item-meta">${qty} Unit x Rp ${product.price.toLocaleString('id-ID')} x ${days} hari</p>
+                        </div>
+                        <div class="cart-item-right">
+                            <p class="cart-item-subtotal">Rp ${subtotal.toLocaleString('id-ID')}</p>
+                            <button onclick="removeItem(${product.id})" class="btn-remove-item"><i class="fa-solid fa-trash"></i> Hapus</button>
+                        </div>
+                    `;
+                    container.appendChild(itemRow);
+                }
+            }
+
+            if (!hasItems) {
+                container.innerHTML = `<p class="empty-cart-msg">Belum ada alat yang dipilih. Silakan tambah dari katalog di atas.</p>`;
+            }
+
+            grandTotalEl.innerText = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+        }
+
+        function removeItem(productId) {
+            delete cart[productId];
+            renderProducts(getCurrentFilter());
+            updateCalculator();
+        }
+
+        function checkoutWhatsApp() {
+            const name = document.getElementById('customer-name').value.trim();
+            const startDate = document.getElementById('start-date').value;
+            const days = document.getElementById('rental-days').value;
+
+            if (!name) {
+                showToast('Mohon masukkan nama lengkap Anda terlebih dahulu.');
+                document.getElementById('customer-name').focus();
+                return;
+            }
+
+            if (!startDate) {
+                showToast('Mohon pilih tanggal mulai pengambilan alat.');
+                document.getElementById('start-date').focus();
+                return;
+            }
+
+            let hasItems = Object.keys(cart).length > 0;
+            if (!hasItems) {
+                showToast('Keranjang sewa masih kosong. Pilih minimal 1 alat camping.');
+                return;
+            }
+
+            let message = `Halo SewaCamp Malang, saya ingin menyewa alat camping dengan rincian berikut:%0A%0A`;
+            message += `*Nama Penyewa:* ${name}%0A`;
+            message += `*Tanggal Ambil:* ${startDate}%0A`;
+            message += `*Durasi Sewa:* ${days} Hari%0A%0A`;
+            message += `*Daftar Alat:*%0A`;
+
+            let grandTotal = 0;
+            let itemSummaries = [];
+            for (const [idStr, qty] of Object.entries(cart)) {
+                if (qty > 0) {
+                    const product = products.find(p => p.id == idStr);
+                    const subtotal = product.price * parseInt(days) * qty;
+                    grandTotal += subtotal;
+                    message += `- ${product.name} (${qty}x) : Rp ${subtotal.toLocaleString('id-ID')}%0A`;
+                    itemSummaries.push(`${product.name} (${qty}x)`);
+                }
+            }
+
+            message += `%0A*Total Biaya:* Rp ${grandTotal.toLocaleString('id-ID')}%0A%0A`;
+            message += `Mohon konfirmasi ketersediaan alatnya. Terima kasih!`;
+
+            const waUrl = `https://wa.me/6281390714457?text=${message}`;
+            window.open(waUrl, '_blank');
+
+            showThankYouModal({
+                name,
+                startDate,
+                days,
+                itemSummary: itemSummaries.join(', '),
+                grandTotal,
+                waUrl
+            });
+        }
+
+        function showThankYouModal({ name, startDate, days, itemSummary, grandTotal, waUrl }) {
+            document.getElementById('ty-customer-name').textContent = name;
+            document.getElementById('ty-start-date').textContent = startDate;
+            document.getElementById('ty-days').textContent = `${days} Hari`;
+            document.getElementById('ty-item-summary').textContent = itemSummary;
+            document.getElementById('ty-grand-total').textContent = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+            document.getElementById('ty-reopen-wa').href = waUrl;
+
+            const modal = document.getElementById('thankyou-modal');
+            modal.classList.add('active');
+        }
+
+        function closeThankYouModal() {
+            const modal = document.getElementById('thankyou-modal');
+            modal.classList.remove('active');
+        }
+
+        document.getElementById('thankyou-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'thankyou-modal') {
+                closeThankYouModal();
+            }
+        });
+
+        // ==========================================
+        // LOGIKA AI CHATBOT CUSTOMER SERVICE (GEMINI)
+        // ==========================================
+        let isChatOpen = false;
+        let isChatLoading = false;
+        let chatHistory = [];
+
+        const systemInstructionText = `Kamu adalah Asisten Customer Service resmi dari "SewaCamp Malang" (Rental Alat Outdoor & Camping).
+Jawablah semua pertanyaan pelanggan secara ramah, sopan, ringkas, jelas, dan informatif dalam Bahasa Indonesia.
+Gunakan HANYA informasi resmi dari website SewaCamp Malang berikut ini sebagai dasar jawabanmu:
+
+1. TENTANG LAYANAN:
+- SewaCamp Malang menyediakan perlengkapan camping & outdoor berkualitas tinggi, bersih, dan siap pakai untuk pendakian gunung (seperti Semeru, Arjuno, Bromo, Panderman), liburan alam, atau camping ceria di Malang Raya dan sekitarnya.
+- Website ini memiliki fitur Katalog Alat (dengan filter kategori) dan Kalkulator Sewa otomatis yang langsung terhubung untuk pemesanan via WhatsApp.
+
+2. DAFTAR HARGA SEWA ALAT CAMPING (14 ITEM - TARIF PER 24 JAM / HARI):
+Kategori Tenda & Matras:
+- Tenda Dome Kapasitas 2-3 Orang: Rp 35.000 / hari
+- Tenda Dome Kapasitas 4-5 Orang: Rp 55.000 / hari
+- Tenda Dome Kapasitas 6-7 Orang: Rp 85.000 / hari
+- Matras Sponge / Matras Gulung: Rp 5.000 / hari
+
+Kategori Perlengkapan Tidur:
+- Sleeping Bag Bulu Angsa / Polar: Rp 15.000 / hari
+
+Kategori Alat Masak:
+- Kompor Portable Kotak + Gas: Rp 15.000 / hari
+- Nesting / Cooking Set (Isi 3-4): Rp 15.000 / hari
+- Meja Camping Lipat Portable: Rp 20.000 / hari
+
+Kategori Penerangan:
+- Headlamp LED / Senter Kepala: Rp 10.000 / hari
+- Lampu Tenda / Lantern LED Gantung: Rp 10.000 / hari
+
+Kategori Lainnya / Aksesoris:
+- Carrier / Tas Keril 60L - 70L: Rp 25.000 / hari
+- Kursi Lipat Outdoor Portable: Rp 15.000 / hari
+- Hammock / Ayunan Gantung: Rp 10.000 / hari
+- Trekking Pole / Tongkat Pendakian: Rp 10.000 / hari
+
+3. SYARAT & KETENTUAN SEWA:
+- Jaminan Identitas: Wajib menyerahkan 2 kartu identitas asli yang masih berlaku (KTP / SIM / Kartu Pelajar / KTM) atas nama penyewa yang ditinggal selama masa sewa.
+- Waktu & Durasi: Perhitungan sewa dihitung per 24 jam. Keterlambatan pengembalian tanpa konfirmasi akan dikenakan denda sesuai tarif harian alat.
+- Kondisi Alat: Alat dicek bersama saat pengambilan dan pengembalian. Penyewa wajib mengembalikan alat dalam keadaan bersih dan kering. Kerusakan atau kehilangan alat ditanggung oleh penyewa.
+- Pengambilan dan pengembalian alat dilakukan langsung di basecamp SewaCamp Malang.
+
+4. LOKASI BASECAMP, KONTAK & JAM OPERASIONAL:
+- Alamat Basecamp: JL Tel Aviv Sumberpucung, Kabupaten Malang, Jawa Timur.
+- WhatsApp / Telepon Admin: +62 813 9071 4457.
+- Jam Operasional: Setiap Hari pukul 08.00 - 20.00 WIB.
+
+ATURAN TAMBAHAN:
+- Jika pelanggan menanyakan total biaya untuk beberapa alat dan beberapa hari, bantu hitungkan dengan tepat sesuai daftar harga di atas, lalu arahkan mereka untuk mencoba fitur "Kalkulator Sewa" di halaman ini agar bisa langsung checkout ke WhatsApp.
+- Jika pelanggan menanyakan hal di luar isi website (misal: stok real-time saat ini, diskon khusus rombongan, atau barang yang tidak ada di daftar 14 item), sampaikan dengan jujur bahwa informasi tersebut tidak tercantum di katalog web dan arahkan pelanggan untuk menghubungi Admin via WhatsApp di +62 813 9071 4457.`;
+
+        function toggleChat() {
+            const chatWindow = document.getElementById('chat-window');
+            const toggleIcon = document.getElementById('chat-toggle-icon');
+            isChatOpen = !isChatOpen;
+
+            if (isChatOpen) {
+                chatWindow.classList.add('open');
+                toggleIcon.className = 'fa-solid fa-chevron-down';
+                setTimeout(() => document.getElementById('chat-input').focus(), 100);
+            } else {
+                chatWindow.classList.remove('open');
+                toggleIcon.className = 'fa-solid fa-comments';
+            }
+        }
+
+        function resetChat() {
+            chatHistory = [];
+            const messagesContainer = document.getElementById('chat-messages');
+            messagesContainer.innerHTML = `
+                <div class="msg-row-bot">
+                    <div class="bot-mini-avatar">
+                        <i class="fa-solid fa-mountain-sun"></i>
+                    </div>
+                    <div class="bubble-bot">
+                        Percakapan telah dimulai ulang. Silakan tanyakan apa saja seputar daftar harga sewa alat, syarat & ketentuan, atau lokasi basecamp <strong>SewaCamp Malang</strong>!
+                    </div>
+                </div>
+            `;
+        }
+
+        function askQuickQuestion(questionText) {
+            if (isChatLoading) return;
+            document.getElementById('chat-input').value = questionText;
+            sendMessage(questionText);
+        }
+
+        function handleChatSubmit(event) {
+            event.preventDefault();
+            if (isChatLoading) return;
+            const inputEl = document.getElementById('chat-input');
+            const text = inputEl.value.trim();
+            if (!text) return;
+            sendMessage(text);
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function formatBotMarkdown(text) {
+            let safe = escapeHTML(text);
+            safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            safe = safe.replace(/\n/g, '<br>');
+            return safe;
+        }
+
+        function appendMessage(role, text) {
+            const container = document.getElementById('chat-messages');
+            const wrapper = document.createElement('div');
+
+            if (role === 'user') {
+                wrapper.className = 'msg-row-user';
+                wrapper.innerHTML = `
+                    <div class="bubble-user">
+                        ${escapeHTML(text)}
+                    </div>
+                `;
+            } else {
+                wrapper.className = 'msg-row-bot';
+                wrapper.innerHTML = `
+                    <div class="bot-mini-avatar">
+                        <i class="fa-solid fa-mountain-sun"></i>
+                    </div>
+                    <div class="bubble-bot">
+                        ${formatBotMarkdown(text)}
+                    </div>
+                `;
+            }
+
+            container.appendChild(wrapper);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const container = document.getElementById('chat-messages');
+            const indicator = document.createElement('div');
+            indicator.id = 'typing-indicator';
+            indicator.className = 'msg-row-bot';
+            indicator.innerHTML = `
+                <div class="bot-mini-avatar">
+                    <i class="fa-solid fa-mountain-sun"></i>
+                </div>
+                <div class="typing-bubble">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                </div>
+            `;
+            container.appendChild(indicator);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        async function fetchGeminiWithRetry(payload, maxRetries = 4) {
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            for (let attempt = 0; attempt <= maxRetries; attempt++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const replyText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!replyText) {
+                        throw new Error('Empty response');
+                    }
+                    return replyText;
+                } catch (err) {
+                    if (attempt === maxRetries) {
+                        throw err;
+                    }
+                    const delay = Math.pow(2, attempt) * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        async function sendMessage(userText) {
+            const inputEl = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('chat-send-btn');
+
+            inputEl.value = '';
+            isChatLoading = true;
+            sendBtn.disabled = true;
+
+            appendMessage('user', userText);
+            chatHistory.push({ role: 'user', parts: [{ text: userText }] });
+            showTypingIndicator();
+
+            const payload = {
+                contents: chatHistory,
+                systemInstruction: {
+                    parts: [{ text: systemInstructionText }]
+                }
+            };
+
+            try {
+                const replyText = await fetchGeminiWithRetry(payload);
+                removeTypingIndicator();
+                appendMessage('model', replyText);
+                chatHistory.push({ role: 'model', parts: [{ text: replyText }] });
+            } catch (error) {
+                removeTypingIndicator();
+                const fallbackMsg = "Maaf Kak, koneksi asisten AI sedang sibuk saat ini. Silakan coba tanyakan lagi sebentar atau langsung hubungi admin kami via WhatsApp di **+62 813 9071 4457**.";
+                appendMessage('model', fallbackMsg);
+                chatHistory.pop();
+            } finally {
+                isChatLoading = false;
+                sendBtn.disabled = false;
+                inputEl.focus();
+            }
+        }
+
+        renderProducts('all');
+    </script>
+</body>
+</html>
